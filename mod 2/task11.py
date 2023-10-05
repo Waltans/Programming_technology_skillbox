@@ -10,6 +10,5 @@ for i in range(len(string)):
         if string[i] == string[j+1]:
             cnt += 1
             break
-    break
 
 print(True if cnt > 0 else False)
