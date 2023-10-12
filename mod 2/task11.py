@@ -1,6 +1,3 @@
-
-
-
 string = input()
 string = string.replace(" ", "")
 cnt = 0
