@@ -27,18 +27,15 @@ def is_valid_date(date_string):
     False
 
     """
-    pattern = (
-        r"^(?:(?:(?:(?:0[1-9]|[12][0-9]|3[01])[./-](?:0[1-9]|1[0-2])[./-]\d{4})|"
-        r"(?:\d{4}[./-](?:0[1-9]|1[0-2])[./-](?:0[1-9]|[12][0-9]|3[01]))|"
-        r"(?:\d{1,2} (?:января|февраля|марта|апреля|мая|июня|июля|августа|сентября|"
-        r"октября|ноября|декабря) \d{4}))|"
-        r"(?:(?:\d{4}, (?:January|February|March|April|May|June|July|August|September|"
-        r"October|November|December) \d{1,2})|"
-        r"(?:\d{4}, (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{1,2})|"
-        r"(?:\d{1,2} (?:January|February|March|April|May|June|July|August|September|"
-        r"October|November|December), \d{4})|"
-        r"(?:\d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec), \d{4})))$"
-    )
+    pattern = (r"^(?:(?:0?\d|[12]\d|3[01])([\.\/-])(?:(?<!3[01][\.\/-])0?2|(?<!31[\.\/-])0?[469]|0?[^2469]|12)\1\d{"
+               r"4}|\d{4}([\.\/-])(?:0?2(?![\.\/-]3[01])|0?[469](?!31[\.\/-])|0?[^2469]|12)\2(?:0?\d|[12]\d|3[01])|("
+               r"?:[0-2]\d|3[01]) (?:января|(?<!3[01] )февраля|марта|(?<!31 )("
+               r"?:апреля|июня|сентября|ноября)|мая|июля|августа|октября|декабря) \d{4}|(?:Jan(?:uary)?|Feb("
+               r"?:ruary)?(?! 3[01])|Mar(?:ch)?|(?:Apr(?:il)?|June?|Sep(?:tember)?|Nov(?:ember)?)(?! "
+               r"31)|May|July?|Aug(?:ust)?|Oct(?:ober)?|Dec(?:ember)?) (?:[0-2]\d|3[01]), \d{4}|\d{4}, "
+               r"(?:Jan(?:uary)?|Feb(?:ruary)?(?! 3[01])|Mar(?:ch)?|(?:Apr(?:il)?|June?|Sep(?:tember)?|Nov("
+               r"?:ember)?)(?! 31)|May|July?|Aug(?:ust)?|Oct(?:ober)?|Dec(?:ember)?) (?:[0-2]\d|3[01]))$")
+    return bool(re.match(pattern, date_string))
 
     non_negative_check = r"(?=.*\d)(?!0\d)"
     full_regex = non_negative_check + pattern
@@ -46,6 +43,7 @@ def is_valid_date(date_string):
     match = re.match(full_regex, date_string)
 
     return bool(match)
+
 
 
 doctest.testmod()
